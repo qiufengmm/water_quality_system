@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data
+data/raw/*
+data/cleaned/*
+!data/samples/*
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# FastAPI
+*.sqlite3
+
+# ML Models
+*.pkl
+*.joblib
+*.h5
+
+# Config
+config.local.yaml
+settings.local.json
+
+# Project
+.claude/
+*.output
