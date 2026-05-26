@@ -1,0 +1,23 @@
+[
+  {
+    "station_id": "ST001",
+    "name": "上游监测站",
+    "location": "河流上游",
+    "description": "河流入口处水质监测",
+    "contact": "张三-13800000001"
+  },
+  {
+    "station_id": "ST002",
+    "name": "中游监测站",
+    "location": "河流中游",
+    "description": "城市段水质监测",
+    "contact": "李四-13800000002"
+  },
+  {
+    "station_id": "ST003",
+    "name": "下游监测站",
+    "location": "河流下游",
+    "description": "河流出口处水质监测",
+    "contact": "王五-13800000003"
+  }
+]

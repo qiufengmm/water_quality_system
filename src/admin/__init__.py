@@ -1,1 +1,1 @@
-# Admin module - Week 3 implementation
+"""Admin module for user authentication, RBAC, and station management."""

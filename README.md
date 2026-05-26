@@ -26,7 +26,7 @@
 |------|------|------|----------|--------|
 | **第1周** ✅ | 5/11-5/17 | 基础框架与数据层 | 项目脚手架、数据采集模块、数据清洗模块、FastAPI基础服务 | 姜宇琦、谢坤 |
 | **第2周** ✅ | 5/18-5/26 | 核心智能与展示层 | XGBoost模型训练、水质预测API、Vue 3前端 + ECharts可视化 | 谢坤、苏航 |
-| **第3周** | 5/27-6/2 | 功能完善与集成 | 异常告警、数据导出、后台管理、系统集成联调 | 赵宏斌、全员 |
+| **第3周** ✅ | 5/27-6/2 | 功能完善与集成 | 异常告警、数据导出增强、后台管理（JWT+RBAC+站点管理） | 赵宏斌、全员 |
 | **第4周** | 6/3-6/9 | 测试与验收 | 单元测试、集成测试、Bug修复、验收准备 | 全员 |
 
 ### 第1周开发进度 ✅
@@ -62,14 +62,31 @@
 | 集成测试 | ✅ 完成 | 姜宇琦 | 全流程上传→清洗→训练→预测验证通过 |
 | 第2周进度报告 | ✅ 完成 | 赵宏斌 | Word文档、AI Plan文档 |
 
-### 第3周规划
+### 第3周开发进度 ✅
+
+| 任务 | 状态 | 完成人 | 说明 |
+|------|------|--------|------|
+| 异常告警模块 | ✅ 完成 | 谢坤 | AlertEngine + 12条GB 3838-2002规则 + CSV持久化 |
+| 告警API（5个端点） | ✅ 完成 | 谢坤 | 规则配置/检查/历史/清空 |
+| 数据导出增强 - Excel | ✅ 完成 | 姜宇琦 | openpyxl多sheet报告导出 |
+| JWT认证与用户管理 | ✅ 完成 | 谢坤 | login/register/token，JSON文件持久化 |
+| 站点管理CRUD | ✅ 完成 | 谢坤 | 预置3站点，admin角色专属管理 |
+| 后台管理API（8个端点） | ✅ 完成 | 谢坤 | 登录/用户/站点完整链路 |
+| 前端告警管理页面 | ✅ 完成 | 苏航 | 规则编辑表格、统计卡片、历史分页 |
+| 前端登录页面 | ✅ 完成 | 苏航 | 表单验证、token存储、路由跳转 |
+| 前端后台管理页面 | ✅ 完成 | 苏航 | 站点CRUD对话框、用户管理表格 |
+| 前端集成（路由/拦截器/侧边栏） | ✅ 完成 | 苏航 | 路由守卫、401自动跳转、登录状态 |
+| 集成测试 | ✅ 完成 | 姜宇琦 | 全模块导入测试、41个路由注册验证 |
+| 第3周进度报告 | ✅ 完成 | 赵宏斌 | Word文档、AI Plan文档 |
+
+### 第4周规划
 
 | 任务 | 负责人 | 预计产出 |
 |------|--------|----------|
-| 异常告警模块（阈值配置、自动触发） | 赵宏斌 | 告警引擎、告警历史 |
-| 数据导出（Excel/PDF报表） | 姜宇琦 | 导出功能、统计报表 |
-| 后台管理（JWT认证、RBAC、站点管理） | 谢坤 | 登录注册、权限控制、点位管理 |
-| 系统集成联调 | 全员 | 全流程打通 |
+| 单元测试覆盖（ML/告警/管理模块） | 苏航 | 新增测试用例 |
+| 系统集成测试与Bug修复 | 全员 | 集成测试报告 |
+| 验收文档完善 | 赵宏斌 | 验收报告 |
+| 演示PPT制作 | 赵宏斌 | 答辩PPT |
 
 ### 第4周规划
 
@@ -90,31 +107,38 @@ water_quality_system/
 ├── config.yaml                      # 环境配置(可选)
 ├── ai_plan/
 │   ├── week1_plan.md               # 第1周AI辅助编程记录
-│   └── week2_plan.md               # 第2周AI辅助编程记录
+│   ├── week2_plan.md               # 第2周AI辅助编程记录
+│   └── week3_plan.md               # 第3周AI辅助编程记录
 ├── data/
 │   ├── raw/                         # 原始数据(自动生成)
 │   ├── cleaned/                     # 清洗后数据(自动生成)
+│   ├── users.json                   # 用户账户数据(自动生成)
+│   ├── stations.json                # 站点信息数据(自动生成)
 │   └── samples/
 │       ├── generate_sample.py       # 示例数据生成器
 │       └── water_quality_sample.csv # 示例数据集(540条)
 ├── docs/
 │   ├── architecture.md             # 架构设计文档
-│   └── generate_week2_report.py    # 第2周Word报告生成脚本
+│   ├── generate_week2_report.py    # 第2周Word报告生成脚本
+│   └── generate_week3_report.py    # 第3周Word报告生成脚本
 ├── models/                         # 训练好的XGBoost模型(自动生成)
 ├── web/                            # Vue 3前端项目
 │   ├── package.json                # 前端依赖配置
 │   ├── vite.config.js              # Vite构建配置(代理到后端)
 │   └── src/
 │       ├── main.js                 # Vue应用入口
-│       ├── App.vue                 # 根布局(侧边栏+顶部导航)
+│       ├── App.vue                 # 根布局(侧边栏+顶部导航+登录状态)
 │       ├── api/
-│       │   └── index.js            # Axios HTTP封装(15个接口)
+│       │   └── index.js            # Axios HTTP封装(30+个接口+token拦截器)
 │       ├── router/
-│       │   └── index.js            # 路由配置(3个页面)
+│       │   └── index.js            # 路由配置(6个页面+路由守卫)
 │       └── views/
 │           ├── Dashboard.vue       # 首页看板
 │           ├── DataManagement.vue  # 数据管理
-│           └── Prediction.vue      # 水质预测
+│           ├── Prediction.vue      # 水质预测
+│           ├── AlertManagement.vue # 告警管理 (第3周)
+│           ├── Login.vue           # 登录 (第3周)
+│           └── AdminDashboard.vue  # 后台管理 (第3周)
 ├── src/
 │   ├── main.py                     # FastAPI应用入口
 │   ├── config.py                   # 系统配置
@@ -134,6 +158,12 @@ water_quality_system/
 │   │   ├── feature_engineer.py     # 特征工程
 │   │   ├── xgboost_predictor.py    # XGBoost预测器
 │   │   └── train.py                # 训练脚本
+    │   ├── alerting/                   # 模块5: 告警 (第3周)
+    │   │   ├── alert_engine.py         # 告警引擎（规则/检查/持久化）
+    │   │   └── __init__.py
+    │   ├── admin/                      # 模块7: 后台管理 (第3周)
+    │   │   ├── auth.py                 # JWT认证+用户管理+站点管理
+    │   │   └── __init__.py
 │   └── api/
 │       └── routes/
 │           ├── health.py           # 健康检查
@@ -293,7 +323,35 @@ pytest tests/ -v
 | `DataManagement.vue` | `web/src/views/DataManagement.vue` | 数据管理（CSV上传+数据清洗+表格浏览） |
 | `Prediction.vue` | `web/src/views/Prediction.vue` | 水质预测（控制面板+ECharts图表+详情表） |
 | `api/index.js` | `web/src/api/index.js` | Axios HTTP封装（15个API接口函数） |
-| `router/index.js` | `web/src/router/index.js` | Vue Router路由配置（3个路由） |
+| `router/index.js` | `web/src/router/index.js` | Vue Router路由配置（6个路由+路由守卫） |
+| `AlertManagement.vue` | `web/src/views/AlertManagement.vue` | 告警管理（规则配置+统计卡片+检查+历史） |
+| `Login.vue` | `web/src/views/Login.vue` | 登录页面（表单验证+token存储） |
+| `AdminDashboard.vue` | `web/src/views/AdminDashboard.vue` | 后台管理（站点CRUD+用户管理） |
+
+### 告警引擎 (第3周新增)
+
+| 类/函数 | 文件 | 功能说明 |
+|---------|------|----------|
+| `AlertRule` | `alerting/alert_engine.py` | 告警规则数据类（indicator/operator/threshold/severity） |
+| `AlertRecord` | `alerting/alert_engine.py` | 告警记录数据类（station_id/indicator/value/timestamp） |
+| `AlertEngine.check_dataframe()` | `alerting/alert_engine.py` | 检查DataFrame中所有记录触发的告警 |
+| `AlertEngine.check_and_save()` | `alerting/alert_engine.py` | 检查并持久化新告警记录到CSV |
+| `AlertEngine.get_history()` | `alerting/alert_engine.py` | 分页查询告警历史（支持按级别过滤） |
+
+### 后台管理模块 (第3周新增)
+
+| 类/函数 | 文件 | 功能说明 |
+|---------|------|----------|
+| `User` | `admin/auth.py` | 用户数据类（username/role/display_name） |
+| `UserManager.authenticate()` | `admin/auth.py` | 验证用户名密码 |
+| `UserManager.create_user()` | `admin/auth.py` | 创建新用户（带密码哈希） |
+| `Station` | `admin/auth.py` | 站点数据类（station_id/name/location/description） |
+| `StationManager.add_station()` | `admin/auth.py` | 新增监测站点 |
+| `StationManager.update_station()` | `admin/auth.py` | 更新站点信息 |
+| `create_access_token()` | `admin/auth.py` | 创建JWT访问令牌 |
+| `verify_token()` | `admin/auth.py` | 验证JWT令牌 |
+| `get_current_user()` | `admin/auth.py` | FastAPI依赖注入（从token获取用户） |
+| `require_role()` | `admin/auth.py` | 角色权限检查依赖工厂 |
 
 ### API接口
 
@@ -307,6 +365,22 @@ pytest tests/ -v
 | `clean_data()` | POST /api/data/clean | 执行数据清洗 |
 | `get_cleaned_data()` | GET /api/data/cleaned | 分页查询清洗后数据 |
 | `get_data_summary()` | GET /api/data/summary | 数据统计摘要（均值、最值、缺失统计） |
+| `get_alert_rules()` | GET /api/alert/rules | 获取告警规则列表 |
+| `update_alert_rules()` | PUT /api/alert/rules | 更新告警阈值配置 |
+| `check_alerts()` | POST /api/alert/check | 执行告警检查 |
+| `get_alert_history()` | GET /api/alert/history | 告警历史分页查询 |
+| `clear_alert_history()` | DELETE /api/alert/history | 清空告警历史 |
+| `export_raw_excel()` | GET /api/export/raw/excel | 原始数据Excel导出 |
+| `export_cleaned_excel()` | GET /api/export/cleaned/excel | 清洗数据Excel导出 |
+| `export_full_report()` | GET /api/export/report | 完整统计报告Excel |
+| `login()` | POST /api/admin/login | 用户登录获取JWT token |
+| `register_user()` | POST /api/admin/register | 注册新用户（admin专属） |
+| `list_users()` | GET /api/admin/users | 用户列表（admin专属） |
+| `get_current_user()` | GET /api/admin/me | 当前用户信息 |
+| `list_stations()` | GET /api/admin/stations | 站点列表 |
+| `create_station()` | POST /api/admin/stations | 新增站点（admin专属） |
+| `update_station()` | PUT /api/admin/stations/{id} | 更新站点（admin专属） |
+| `delete_station()` | DELETE /api/admin/stations/{id} | 删除站点（admin专属） |
 
 ## 模型训练结果
 
@@ -340,6 +414,7 @@ pytest tests/ -v
 **AI Plan文件**:
 - `ai_plan/week1_plan.md` — 第1周AI辅助编程记录
 - `ai_plan/week2_plan.md` — 第2周AI辅助编程记录（ML模型+前端开发+文档）
+- `ai_plan/week3_plan.md` — 第3周AI辅助编程记录（告警+后台管理+导出增强）
 
 **第2周AI编码指令**:
 1. CMD-01: 创建ML基础框架（Base + FeatureEngineer + XGBoostPredictor + Train）
@@ -349,7 +424,18 @@ pytest tests/ -v
 5. CMD-05: 修复滚动窗口Bug + 特征列对齐Bug + 训练NaN Bug
 6. CMD-06: 生成AI Plan文档 + Word报告生成脚本
 
-**代码统计**: 第2周新增约2070行代码（ML模块840行 + 预测API 180行 + 前端805行 + 文档230行），共18个文件。
+**第3周AI编码指令**:
+1. CMD-07: 创建告警引擎（AlertEngine + GB 3838-2002默认规则）
+2. CMD-08: 实现告警API路由（规则配置/检查/历史）
+3. CMD-09: 实现JWT认证和用户管理（UserManager + Token）
+4. CMD-10: 实现站点管理CRUD和管理API
+5. CMD-11: 增强数据导出（Excel多sheet报告）
+6. CMD-12: 创建3个前端页面（告警管理/登录/后台管理）
+7. CMD-13: 前端集成（路由/拦截器/侧边栏/登录状态）
+
+**代码统计**: 第2周新增约2070行代码（18个文件）。第3周新增约1590行代码（告警引擎275行 + 后台管理435行 + 前端680行 + 其他200行），共14个文件。
+
+**系统总计**: 41个REST API端点 | 6个前端页面 | 7个功能模块 | ~5300行代码
 
 ## 许可证
 

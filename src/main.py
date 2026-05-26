@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.config import settings
-from src.api.routes import data_routes, health, export_routes, predict_routes
+from src.api.routes import data_routes, health, export_routes, predict_routes, alert_routes, admin_routes
 from src.data_manager import data_manager
 
 
@@ -42,6 +42,8 @@ app.include_router(health.router, tags=["System"])
 app.include_router(data_routes.router, prefix="/api/data", tags=["Data Management"])
 app.include_router(export_routes.router, prefix="/api/export", tags=["Data Export"])
 app.include_router(predict_routes.router, prefix="/api", tags=["Prediction"])
+app.include_router(alert_routes.router, prefix="/api", tags=["Alert"])
+app.include_router(admin_routes.router, prefix="/api", tags=["Admin"])
 
 
 @app.get("/")
