@@ -83,7 +83,7 @@ class Settings(BaseSettings):
         """Load settings from YAML config file if exists."""
         config_file = Path(__file__).parent.parent / "config.yaml"
         if config_file.exists():
-            with open(config_file) as f:
+            with open(config_file, encoding="utf-8") as f:
                 data = yaml.safe_load(f)
             if data:
                 for key, value in data.items():

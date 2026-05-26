@@ -7,17 +7,21 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.config import settings
-from src.api.routes import data_routes, health
+from src.api.routes import data_routes, health, export_routes
+from src.data_manager import data_manager
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifecycle manager."""
-    # Startup: ensure data directories exist
     Path(settings.raw_data_dir).mkdir(parents=True, exist_ok=True)
     Path(settings.cleaned_data_dir).mkdir(parents=True, exist_ok=True)
+    info = data_manager.get_data_info()
+    if info.get("has_raw"):
+        print(f"  Loaded {info['raw_records']} raw records from disk")
+    if info.get("has_cleaned"):
+        print(f"  Loaded {info['cleaned_records']} cleaned records from disk")
     yield
-    # Shutdown: cleanup if needed
 
 
 app = FastAPI(
@@ -26,7 +30,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,14 +38,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register routers
 app.include_router(health.router, tags=["System"])
 app.include_router(data_routes.router, prefix="/api/data", tags=["Data Management"])
+app.include_router(export_routes.router, prefix="/api/export", tags=["Data Export"])
 
 
 @app.get("/")
 async def root():
-    """Root endpoint returning API information."""
     return {
         "app": settings.app_name,
         "version": settings.app_version,

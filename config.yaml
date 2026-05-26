@@ -1,0 +1,36 @@
+# 水质监测与预测系统配置文件
+
+# 应用设置
+app_name: "Water Quality Monitoring & Prediction System"
+app_version: "1.0.0"
+debug: true
+
+# 服务端口
+host: "0.0.0.0"
+port: 8000
+
+# 告警阈值 (基于GB 3838-2002地表水环境质量标准)
+alert:
+  ph_min: 6.0
+  ph_max: 9.0
+  do_min: 2.0
+  nh3n_max: 2.0
+  turbidity_max: 10.0
+  cod_max: 40.0
+
+# 传感器默认配置
+sensor:
+  default_station: "ST001"
+  anomaly_probability: 0.02
+  interval_minutes: 60
+
+# 清洗默认配置
+cleaning:
+  handle_missing: "interpolate"   # drop / interpolate / fill_mean
+  outlier_method: "iqr"           # iqr / zscore / none
+  outlier_threshold: 1.5
+
+# 预测配置 (第2周启用)
+prediction:
+  default_days: 7
+  model_type: "xgboost"          # xgboost / random_forest / lstm
