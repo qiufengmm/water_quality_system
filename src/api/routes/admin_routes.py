@@ -117,7 +117,7 @@ async def create_station(
     success = station_manager.add_station(station)
     if not success:
         raise HTTPException(status_code=409, detail=f"Station '{station_data.station_id}' already exists")
-    return {"message": "Station created", "station": station_data.dict()}
+    return {"message": "Station created", "station": station_data.model_dump()}
 
 
 @router.put("/admin/stations/{station_id}")
@@ -129,7 +129,7 @@ async def update_station(
     """Update a monitoring station (admin only)."""
     success = station_manager.update_station(
         station_id,
-        {k: v for k, v in data.dict().items() if v is not None},
+        {k: v for k, v in data.model_dump().items() if v is not None},
     )
     if not success:
         raise HTTPException(status_code=404, detail=f"Station '{station_id}' not found")

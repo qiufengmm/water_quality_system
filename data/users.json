@@ -1,9 +1,0 @@
-[
-  {
-    "username": "admin",
-    "password_hash": "$2b$12$EtRyCKX5tYwH2hqpAxU6jOArMgrQKWs/zYMlZK/xiSbfam17PdIxe",
-    "role": "admin",
-    "display_name": "系统管理员",
-    "disabled": false
-  }
-]

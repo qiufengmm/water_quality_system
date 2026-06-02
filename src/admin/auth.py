@@ -7,9 +7,17 @@ simplicity (no database dependency).
 
 import json
 from dataclasses import dataclass, asdict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
+
+# ── bcrypt compat shim: passlib 1.7.4 reads bcrypt.__about__.__version__
+# which bcrypt >= 4.1 removed.  Re-expose it so passlib doesn't warn.
+import bcrypt as _bcrypt
+if not hasattr(_bcrypt, "__about__"):
+    class _About:
+        __version__ = _bcrypt.__version__
+    _bcrypt.__about__ = _About
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -200,7 +208,7 @@ class StationManager:
 def create_access_token(data: dict) -> str:
     """Create a JWT access token."""
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=settings.jwt_expire_minutes)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=settings.jwt_expire_minutes)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, settings.jwt_secret, algorithm=settings.jwt_algorithm)
 

@@ -22,6 +22,9 @@ env/
 data/raw/*
 data/cleaned/*
 !data/samples/*
+data/users.json
+data/stations.json
+data/alert_history.csv
 
 # Logs
 *.log

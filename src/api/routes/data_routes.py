@@ -4,9 +4,15 @@ Uses persistent file-based storage via DataManager.
 Data survives server restarts.
 """
 
+import math
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+
+def _safe_json(v: float) -> float | None:
+    """Replace NaN/Inf with None for JSON-safe serialization."""
+    return None if math.isnan(v) or math.isinf(v) else v
 
 import pandas as pd
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, Query
@@ -197,10 +203,10 @@ async def get_data_summary():
             col_data = df[col].dropna()
             if not col_data.empty:
                 summary[col] = {
-                    "min": round(float(col_data.min()), 2),
-                    "max": round(float(col_data.max()), 2),
-                    "mean": round(float(col_data.mean()), 2),
-                    "std": round(float(col_data.std()), 2),
+                    "min": _safe_json(round(float(col_data.min()), 2)),
+                    "max": _safe_json(round(float(col_data.max()), 2)),
+                    "mean": _safe_json(round(float(col_data.mean()), 2)),
+                    "std": _safe_json(round(float(col_data.std()), 2)),
                     "missing": int(df[col].isna().sum()),
                 }
 

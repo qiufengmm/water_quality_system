@@ -29,9 +29,9 @@ class WaterQualityRecord(BaseModel):
     cod: Optional[float] = Field(None, ge=0, description="Chemical oxygen demand (mg/L)")
     total_phosphorus: Optional[float] = Field(None, ge=0, description="Total phosphorus (mg/L)")
 
-    class Config:
-        from_attributes = True
-        json_schema_extra = {
+    model_config = {
+        "from_attributes": True,
+        "json_schema_extra": {
             "example": {
                 "station_id": "ST001",
                 "collection_time": "2026-05-01T08:00:00",
@@ -44,6 +44,7 @@ class WaterQualityRecord(BaseModel):
                 "total_phosphorus": 0.05
             }
         }
+    }
 
 
 class CollectionResult(BaseModel):

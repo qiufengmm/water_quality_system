@@ -28,7 +28,18 @@ class Settings(BaseSettings):
 
     # Model
     model_dir: str = ""
-    default_prediction_days: int = 7
+    prediction_default_days: int = 7
+    prediction_model_type: str = "xgboost"
+
+    # Sensor defaults
+    sensor_default_station: str = "ST001"
+    sensor_anomaly_probability: float = 0.02
+    sensor_interval_minutes: int = 60
+
+    # Cleaning defaults
+    cleaning_handle_missing: str = "interpolate"
+    cleaning_outlier_method: str = "iqr"
+    cleaning_outlier_threshold: float = 1.5
 
     # Alert thresholds (based on Chinese Surface Water Quality Standards GB 3838-2002)
     alert_ph_min: float = 6.0
@@ -58,9 +69,7 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     log_dir: str = ""
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
