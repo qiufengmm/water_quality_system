@@ -9,7 +9,7 @@
         <el-col :span="6">
           <div style="margin-bottom: 4px; font-size: 13px; color: #606266">选择站点</div>
           <el-select v-model="stationId" style="width: 100%">
-            <el-option v-for="s in stations" :key="s" :label="s" :value="s" />
+            <el-option v-for="s in stations" :key="s.station_id" :label="s.name || s.station_id" :value="s.station_id" />
           </el-select>
         </el-col>
         <el-col :span="8">
@@ -81,7 +81,7 @@ import * as echarts from 'echarts'
 
 const stationId = ref('ST001')
 const days = ref(7)
-const stations = ref(['ST001', 'ST002', 'ST003'])
+const stations = ref([])
 const training = ref(false)
 const predicting = ref(false)
 const modelReady = ref(false)

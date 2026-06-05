@@ -68,7 +68,7 @@ export const getDataInfo = () =>
   api.get('/api/data/info')
 
 export const getStations = () =>
-  api.get('/api/data/stations')
+  api.get('/api/admin/stations')
 
 export const deleteRawData = () =>
   api.delete('/api/data/raw')
