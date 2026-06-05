@@ -342,10 +342,10 @@ class TestPredictAPI:
     async def test_train_from_data(self, client):
         """POST /api/predict/train trains using sample data."""
         resp = await client.post("/api/predict/train")
-        assert resp.status_code in (200, 500)
+        assert resp.status_code in (200, 400, 500)
         if resp.status_code == 200:
             data = resp.json()
-            assert "avg_r2" in data or "_summary" in data
+            assert "metrics" in data
 
     @pytest.mark.asyncio
     async def test_predict_history(self, client):

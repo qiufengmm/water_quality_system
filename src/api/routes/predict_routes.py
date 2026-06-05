@@ -139,7 +139,7 @@ async def predict_batch(
 
     return {
         "station_id": result.station_id,
-        "prediction_dates": result.dates,
+        "dates": result.dates,
         "predictions": result.predictions,
         "confidence": result.confidence,
         "message": result.message,
